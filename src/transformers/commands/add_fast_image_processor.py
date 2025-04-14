@@ -91,8 +91,12 @@ def add_import_statement_init(content: str, fast_image_processor_name: str, mode
     # Step 2: Parse existing entries
     lines = block_content.strip().split("\n")
     entries = []
-
-    indent = " " * (len(lines[1]) - len(lines[1].lstrip()))
+    if len(lines) > 1:
+        indent = " " * (len(lines[1]) - len(lines[1].lstrip()))
+    elif lines:
+        indent = " " * (len(lines[0]) - len(lines[0].lstrip()))
+    else:
+        indent = ""
     import_structure_header = indent + lines[0]
     entries = lines[1:]
 

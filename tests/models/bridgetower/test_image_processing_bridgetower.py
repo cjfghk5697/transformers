@@ -19,7 +19,7 @@ from typing import Optional, Union
 import numpy as np
 
 from transformers.testing_utils import require_torch, require_vision
-from transformers.utils import is_vision_available
+from transformers.utils import is_torchvision_available, is_vision_available
 
 from ...test_image_processing_common import ImageProcessingTestMixin, prepare_image_inputs
 
@@ -28,6 +28,9 @@ if is_vision_available():
     from PIL import Image
 
     from transformers import BridgeTowerImageProcessor
+
+    if is_torchvision_available():
+        from transformers import BridgeTowerImageProcessorFast
 
 
 class BridgeTowerImageProcessingTester:
@@ -137,6 +140,7 @@ class BridgeTowerImageProcessingTester:
 @require_vision
 class BridgeTowerImageProcessingTest(ImageProcessingTestMixin, unittest.TestCase):
     image_processing_class = BridgeTowerImageProcessor if is_vision_available() else None
+    fast_image_processing_class = BridgeTowerImageProcessorFast if is_torchvision_available() else None
 
     def setUp(self):
         super().setUp()
